@@ -15,6 +15,12 @@ module.exports = {
         display: "standalone",
         icon: "static/avatar.jpg"
       }
+    },
+    {
+      resolve: `gatsby-plugin-s3`,
+      options: {
+        bucketName: "tivanovit.com"
+      }
     }
   ],
   siteMetadata: {

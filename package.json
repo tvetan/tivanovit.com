@@ -9,16 +9,19 @@
     "url": "https://github.com/tvetan/tivanovit.com/issues"
   },
   "scripts": {
+    "clean": "rm -rf node_modules .cache public",
     "dev": "gatsby develop",
     "build": "gatsby build",
     "develop": "gatsby develop",
     "start": "npm run develop",
-    "serve": "gatsby serve"
+    "serve": "gatsby serve",
+    "deploy": "gatsby-plugin-s3 deploy"
   },
   "dependencies": {
-    "gatsby": "^2.13.9",
-    "gatsby-plugin-manifest": "^2.2.1",
-    "gatsby-theme-blog": "^1.0.0",
+    "gatsby": "^2.13.50",
+    "gatsby-plugin-manifest": "^2.2.4",
+    "gatsby-plugin-s3": "^0.3.1",
+    "gatsby-theme-blog": "^1.0.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
