@@ -31,7 +31,8 @@ module.exports = {
       options: {
         siteUrl: siteAddress.href.slice(0, -1)
       }
-    }
+    },
+    `gatsby-plugin-offline`
   ],
   siteMetadata: {
     // Used for the site title and SEO
