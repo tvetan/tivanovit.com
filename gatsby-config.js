@@ -1,3 +1,5 @@
+const siteAddress = new URL("https://www.tivanovit.com/");
+
 module.exports = {
   plugins: [
     {
@@ -19,7 +21,15 @@ module.exports = {
     {
       resolve: `gatsby-plugin-s3`,
       options: {
-        bucketName: "tivanovit.com"
+        bucketName: "tivanovit.com",
+        protocol: siteAddress.protocol.slice(0, -1),
+        hostname: siteAddress.hostname
+      }
+    },
+    {
+      resolve: `gatsby-plugin-canonical-urls`,
+      options: {
+        siteUrl: siteAddress.href.slice(0, -1)
       }
     }
   ],

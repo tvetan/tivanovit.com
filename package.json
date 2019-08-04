@@ -13,12 +13,14 @@
     "dev": "gatsby develop",
     "build": "gatsby build",
     "develop": "gatsby develop",
-    "start": "npm run develop",
+    "start": "yarn run develop",
     "serve": "gatsby serve",
-    "deploy": "gatsby-plugin-s3 deploy"
+    "deploy": "gatsby-plugin-s3 deploy --yes",
+    "deploy-with-invalidation": "gatsby-plugin-s3 deploy --yes && aws cloudfront create-invalidation --distribution-id E3GG6JHTCZJPZA --paths \"/*\""
   },
   "dependencies": {
     "gatsby": "^2.13.50",
+    "gatsby-plugin-canonical-urls": "^2.1.2",
     "gatsby-plugin-manifest": "^2.2.4",
     "gatsby-plugin-s3": "^0.3.1",
     "gatsby-theme-blog": "^1.0.2",
