@@ -1,0 +1,73 @@
+---
+title: How to debug Sitefinity search
+date: 2020-02-16
+---
+
+Recently I had a problem with the Sitefinity search because it was
+showing wrong search results. And to find what
+exactly is being indexed, I followed these steps.
+
+1. Create a **CustomPageInboundPipe** extending PageInboundPipe:
+
+#### **`CustomPageInboundPipe.cs`**
+
+```java
+using Telerik.Sitefinity.Abstractions;
+using Telerik.Sitefinity.Pages.Model;
+using Telerik.Sitefinity.Publishing;
+using Telerik.Sitefinity.Publishing.Pipes;
+
+namespace Website
+{
+    public class CustomPageInboundPipe : PageInboundPipe
+    {
+        protected override void SetWrapperObjectProperties(WrapperObject wrapperObject, PageNode node)
+        {
+            base.SetWrapperObjectProperties(wrapperObject, node);
+            var title = wrapperObject.GetProperty("Title").ToString();
+            if (wrapperObject.HasProperty("Content") && title == "Home")
+            {
+                var content = wrapperObject.AdditionalProperties["Content"];
+                Log.Write(content);
+            }
+        }
+    }
+}
+```
+
+Here we are checking for a page that has the title Home. ou can replace it with any problematic page.
+And we are writing to the log files the value of the Content property.
+It contains the full HTML of the page that is being indexed. Sitefinity logs the value in **App_Data/Sitefinity/Logs/Trace.log**
+or you can Debug it and inspect the value.
+
+2. In Global.asax file you can register the new CustomPageInboundPipe
+
+#### **`Global.asax`**
+
+```java
+protected void Application_Start(object sender, EventArgs e)
+{
+    Bootstrapper.Initialized +=
+        new EventHandler<ExecutedEventArgs>(this.Bootstrapper_Initialized);
+}
+```
+
+Here we are subscribing to the Initialized event in Sitefinity
+
+```java
+private void Bootstrapper_Initialized(object sender, ExecutedEventArgs e)
+{
+    if (e.CommandName == "Bootstrapped")
+    {
+        PublishingSystemFactory.UnregisterPipe(PageInboundPipe.PipeName);
+        PublishingSystemFactory.RegisterPipe(PageInboundPipe.PipeName, typeof(CustomPageInboundPipe));
+    }
+}
+```
+
+Here we are Unregistering the original PageInboundPipe and registering our custom implementation.
+
+3. Lastly go to **/Sitefinity/Administration/Search** find your search index and **Actions > Reindex**
+
+If everything was successful when you go to the logs folder you should see the generated **Trace.logs** file with
+the indexed content of the page.

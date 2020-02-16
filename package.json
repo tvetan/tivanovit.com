@@ -19,14 +19,14 @@
     "deploy-with-invalidation": "gatsby-plugin-s3 deploy --yes && aws cloudfront create-invalidation --distribution-id E3GG6JHTCZJPZA --paths \"/*\""
   },
   "dependencies": {
-    "gatsby": "^2.13.50",
+    "gatsby": "^2.19.7",
     "gatsby-plugin-canonical-urls": "^2.1.2",
-    "gatsby-plugin-manifest": "^2.2.4",
-    "gatsby-plugin-offline": "^2.2.4",
+    "gatsby-plugin-manifest": "^2.2.41",
+    "gatsby-plugin-offline": "^3.0.34",
     "gatsby-plugin-s3": "^0.3.1",
-    "gatsby-theme-blog": "^1.0.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "gatsby-theme-blog": "^1.2.35",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   },
   "homepage": "https://tivanovit.com"
 }
